@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Kalaa & Co. Admin</title>
+<script src="firebase-config.js"></script>
+<style>
+*{box-sizing:border-box;margin:0}body{font-family:system-ui,sans-serif;background:#FFF6F9;color:#2A2030;line-height:1.5}
+.box{max-width:400px;margin:12vh auto;background:#fff;border:1px solid #F0D9E3;border-radius:20px;padding:28px}
+h2{margin-bottom:14px}h3{margin:6px 0 10px}
+input,textarea,select{width:100%;padding:10px 12px;border:1px solid #e3cbd8;border-radius:10px;font:inherit;margin:4px 0 12px;background:#fff}
+label{font-weight:700;font-size:.88rem}
+button{font:inherit;font-weight:700;border:0;border-radius:99px;padding:9px 18px;cursor:pointer;background:#E5457F;color:#fff}
+button.g{background:#fff;color:#2A2030;border:2px solid #2A2030}button.r{background:#fff;color:#c22;border:2px solid #c22}
+header{display:flex;gap:14px;align-items:center;padding:12px 20px;background:#2A2030;color:#fff;position:sticky;top:0;z-index:5}header a{color:#fff}header b{flex:1}
+.tabs{display:flex;gap:8px;padding:14px 20px;flex-wrap:wrap}.tabs button{background:#fff;color:#2A2030;border:2px solid #F0D9E3}.tabs .on{background:#2A2030;color:#fff;border-color:#2A2030}
+main{max-width:860px;margin:0 auto;padding:0 20px 80px}.panel{background:#fff;border:1px solid #F0D9E3;border-radius:18px;padding:20px;margin-bottom:16px}
+.row{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed #F0D9E3}.row img{width:56px;height:56px;object-fit:cover;border-radius:10px;background:#f6e9ef}.row div{flex:1}.row small{color:#6D6277}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.prev{width:120px;height:120px;object-fit:cover;border-radius:12px;display:block;margin-bottom:8px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:14px}.gal div{text-align:center}.gal img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px}
+#msg{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#2A2030;color:#fff;padding:10px 20px;border-radius:99px;z-index:9}#msg.bad{background:#c22}
+.err{color:#c22;font-size:.9rem;min-height:1.2em}
+</style></head><body>
+
+<div class="box" id="setup" hidden><h2>Setup needed</h2><p>Open <b>firebase-config.js</b> and paste your Firebase values (apiKey, authDomain, projectId, appId), then upload it again.</p></div>
+
+<div class="box" id="login" hidden><h2>Kalaa & Co. Admin</h2>
+  <label for="em">Email</label><input id="em" type="email" autocomplete="username">
+  <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password">
+  <div class="err" id="lerr"></div><button id="go">Log in</button></div>
+
+<div id="app" hidden>
+<header><b>Kalaa & Co. admin</b><a href="index.html" target="_blank">View site</a><button class="g" id="out">Log out</button></header>
+<div class="tabs"><button data-t="products" class="on">Products</button><button data-t="gallery">Photos</button><button data-t="reviews">Reviews</button><button data-t="settings">Settings</button></div>
+<main>
+<div id="t-products" class="tp">
+  <div class="panel"><button id="newP">+ Add product</button> <button class="g" id="seed" hidden>Import my current products</button>
+    <p style="margin-top:8px;color:#6D6277;font-size:.9rem">Once you add or import products here, the website shows these instead of the built-in ones.</p></div>
+  <div class="panel" id="pform" hidden><h3 id="ptitle">Product</h3>
+    <label>Name</label><input id="pn">
+    <div class="two"><div><label>Price (₹)</label><input id="pp" type="number" min="0"></div><div><label>Section / category</label><input id="pc" list="cl" placeholder="e.g. Kits, Home decor"><datalist id="cl"></datalist></div></div>
+    <div class="two"><div><label>Badge (optional)</label><input id="pb" placeholder="Bestseller"></div><div><label>Position (1 shows first)</label><input id="po" type="number" min="1"></div></div>
+    <label>Short description</label><textarea id="pd" rows="2"></textarea>
+    <label>What's in the box (one item per line)</label><textarea id="pi" rows="3"></textarea>
+    <label>Photo</label><img class="prev" id="prev" hidden><input id="pf" type="file" accept="image/*"><button class="g" id="rmImg" type="button" hidden>Remove photo</button>
+    <p><label><input id="ps" type="checkbox" style="width:auto;margin:0 6px 0 0"> Coming soon (no buying)</label></p>
+    <p><label><input id="ph" type="checkbox" style="width:auto;margin:0 6px 0 0"> Hide from website</label></p><br>
+    <button id="psave">Save product</button> <button class="g" id="pcancel">Cancel</button></div>
+  <div class="panel" id="plist"></div>
+</div>
+<div id="t-gallery" class="tp" hidden><div class="panel"><h3>Studio photos</h3><p style="color:#6D6277;font-size:.9rem">Shown in "Made by hand, in Pune". Pick one or many.</p><br><input id="gf" type="file" accept="image/*" multiple><div class="gal" id="glist"></div></div></div>
+<div id="t-reviews" class="tp" hidden><div class="panel"><h3>Customer reviews</h3>
+  <label>Customer name</label><input id="rn" placeholder="Priya, Pune"><label>Review</label><textarea id="rt" rows="2"></textarea><button id="radd">Add review</button><div id="rlist" style="margin-top:14px"></div></div></div>
+<div id="t-settings" class="tp" hidden><div class="panel"><h3>Site settings</h3>
+  <label>Top announcement bar (empty to hide)</label><input id="sa">
+  <label>WhatsApp number (91 + 10 digits)</label><input id="sw" inputmode="numeric">
+  <label>UPI ID</label><input id="su">
+  <label>Free shipping above (₹, 0 to hide)</label><input id="ss" type="number" min="0">
+  <label>Instagram link</label><input id="si"><button id="ssave">Save settings</button></div></div>
+</main></div>
+<div id="msg" hidden></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,doc,getDocs,getDoc,setDoc,addDoc,deleteDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const $=s=>document.querySelector(s), F=window.FIREBASE;
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+if(!F||!F.apiKey||/PASTE/.test(F.apiKey)){ $("#setup").hidden=false } else {
+const auth=getAuth(initializeApp(F)), db=getFirestore();
+const msg=(t,bad)=>{const m=$("#msg");m.textContent=t;m.className=bad?"bad":"";m.hidden=false;clearTimeout(msg.t);msg.t=setTimeout(()=>m.hidden=true,3500)};
+const rd=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.readAsDataURL(f)});
+async function shrink(file,max=700){const im=new Image();im.src=await rd(file);await im.decode();const k=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);return c.toDataURL("image/jpeg",.78)}
+const all=async n=>(await getDocs(collection(db,n))).docs.map(d=>({id:d.id,...d.data()}));
+let P=[],G=[],R=[],cur={},curImg="";
+
+$("#go").onclick=async()=>{$("#lerr").textContent="";try{await signInWithEmailAndPassword(auth,$("#em").value.trim(),$("#pw").value)}catch(e){$("#lerr").textContent="Wrong email or password"}};
+$("#out").onclick=()=>signOut(auth);
+onAuthStateChanged(auth,u=>{$("#login").hidden=!!u;$("#app").hidden=!u;if(u)load()});
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll(".tp").forEach(t=>t.hidden=t.id!=="t-"+b.dataset.t)});
+
+async function load(){
+  [P,G,R]=await Promise.all([all("products"),all("gallery"),all("reviews")]);
+  P.sort((a,b)=>(a.ord||0)-(b.ord||0));drawP();drawG();drawR();
+  const c=await getDoc(doc(db,"site","config")),d=c.exists()?c.data():{};
+  $("#sa").value=d.announcement??"";$("#sw").value=d.whatsapp??"";$("#su").value=d.upiId??"";$("#ss").value=d.freeShipAbove??999;$("#si").value=d.instagram??"https://instagram.com/kalaa_artcraft";
+}
+/* products */
+function drawP(){
+  $("#seed").hidden=P.length>0;
+  $("#cl").innerHTML=[...new Set(P.map(p=>p.cat).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join("");
+  $("#plist").innerHTML=P.length?P.map(p=>`<div class="row">${p.img?`<img src="${p.img}">`:`<img>`}<div><b>${esc(p.name)}</b> ${p.soon?"(coming soon)":"₹"+p.price}${p.hidden?" · hidden":""}<br><small>${esc(p.cat||"")} · position ${p.ord||"-"}</small></div><button class="g" data-e="${p.id}">Edit</button><button class="r" data-d="${p.id}">Delete</button></div>`).join(""):"<p>No products yet. Add one, or import your current ones.</p>";
+}
+function openForm(p){cur=p||{};curImg=cur.img||"";$("#ptitle").textContent=p?"Edit product":"New product";
+  $("#pn").value=cur.name||"";$("#pp").value=cur.price??"";$("#pc").value=cur.cat||"";$("#pb").value=cur.badge||"";$("#po").value=cur.ord||P.length+1;$("#pd").value=cur.desc||"";$("#pi").value=(cur.inc||[]).join("\n");$("#ps").checked=!!cur.soon;$("#ph").checked=!!cur.hidden;$("#pf").value="";showImg();$("#pform").hidden=false;$("#pform").scrollIntoView({behavior:"smooth"})}
+function showImg(){$("#prev").hidden=$("#rmImg").hidden=!curImg;if(curImg)$("#prev").src=curImg}
+$("#newP").onclick=()=>openForm();$("#pcancel").onclick=()=>$("#pform").hidden=true;
+$("#pf").onchange=async e=>{const f=e.target.files[0];if(f){curImg=await shrink(f);showImg()}};
+$("#rmImg").onclick=()=>{curImg="";showImg()};
+$("#psave").onclick=async()=>{
+  const name=$("#pn").value.trim();if(!name)return msg("Please enter a name",1);
+  const d={name,price:+$("#pp").value||0,cat:$("#pc").value.trim()||"Kits",badge:$("#pb").value.trim(),desc:$("#pd").value.trim(),inc:$("#pi").value.split("\n").map(x=>x.trim()).filter(Boolean),soon:$("#ps").checked,hidden:$("#ph").checked,ord:+$("#po").value||P.length+1,img:curImg};
+  if(cur.key)d.key=cur.key;
+  try{await setDoc(cur.id?doc(db,"products",cur.id):doc(collection(db,"products")),d);$("#pform").hidden=true;msg("Saved. It is live on the website.");load()}catch(e){msg("Could not save: "+e.code,1)}};
+$("#plist").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.e)openForm(P.find(p=>p.id===b.dataset.e));
+  if(b.dataset.d&&confirm("Delete this product?")){await deleteDoc(doc(db,"products",b.dataset.d));msg("Deleted");load()}};
+$("#seed").onclick=async()=>{const S=[["ganesha-kit","Ganesha DIY Kit",499,"Kits","Bestseller","Plaster Ganesha on a lotus with paints and brush.",["Plaster Ganesha on lotus","8 to 12 colour pots","Paint brush"]],["unicorn-kit","Unicorn DIY Kit",399,"Kits","Kids' pick","Unicorn figure with pastel paints.",["Plaster unicorn","Pastel colour pots","Paint brush"]],["lotus-diya","Lotus Tealight Holder",299,"Home decor","Drop 01","Golden lotus tealight holder from Drop 01.",["Golden lotus holder"]]];
+  for(const [i,s] of S.entries())await addDoc(collection(db,"products"),{key:s[0],name:s[1],price:s[2],cat:s[3],badge:s[4],desc:s[5],inc:s[6],ord:i+1,img:""});
+  msg("Imported. Photos stay the same.");load()};
+/* gallery */
+function drawG(){$("#glist").innerHTML=G.length?G.sort((a,b)=>(a.ord||0)-(b.ord||0)).map(g=>`<div><img src="${g.img}"><button class="r" data-g="${g.id}" style="margin-top:6px;padding:4px 12px">Delete</button></div>`).join(""):"<p>No photos yet. The site shows its starter photos.</p>"}
+$("#gf").onchange=async e=>{try{for(const f of e.target.files)await addDoc(collection(db,"gallery"),{img:await shrink(f,640),ord:Date.now()});e.target.value="";msg("Photos added");load()}catch(x){msg("Could not upload: "+x.code,1)}};
+$("#glist").onclick=async e=>{const b=e.target.closest("button");if(b&&confirm("Delete this photo?")){await deleteDoc(doc(db,"gallery",b.dataset.g));load()}};
+/* reviews */
+function drawR(){$("#rlist").innerHTML=R.map(r=>`<div class="row"><div><b>${esc(r.name)}</b><br><small>${esc(r.text)}</small></div><button class="r" data-r="${r.id}">Delete</button></div>`).join("")}
+$("#radd").onclick=async()=>{const n=$("#rn").value.trim(),t=$("#rt").value.trim();if(!n||!t)return msg("Add name and review",1);await addDoc(collection(db,"reviews"),{name:n,text:t});$("#rn").value=$("#rt").value="";msg("Review added");load()};
+$("#rlist").onclick=async e=>{const b=e.target.closest("button");if(b&&confirm("Delete this review?")){await deleteDoc(doc(db,"reviews",b.dataset.r));load()}};
+/* settings */
+$("#ssave").onclick=async()=>{const w=$("#sw").value.replace(/\D/g,""),u=$("#su").value.trim();
+  if(w.length<12)return msg("WhatsApp: use 91 followed by 10 digits",1);if(!u.includes("@"))return msg("Enter a valid UPI ID",1);
+  try{await setDoc(doc(db,"site","config"),{announcement:$("#sa").value.trim(),whatsapp:w,upiId:u,freeShipAbove:+$("#ss").value||0,instagram:$("#si").value.trim()},{merge:true});msg("Settings saved")}catch(e){msg("Could not save: "+e.code,1)}};
+}
+</script></body></html>
