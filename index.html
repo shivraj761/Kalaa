@@ -7,6 +7,7 @@
 <meta name="description" content="Handmade DIY mould and paint kits from Pune. Ganesha, unicorn and lotus kits. Birthday return gifts. Shipping across India.">
 <meta property="og:title" content="Kalaa & Co. | DIY Mould Kits"><meta property="og:description" content="Create. Paint. Play. Handmade in Pune, shipped across India."><meta name="theme-color" content="#E5457F">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="firebase-config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--pink:#E5457F;--purple:#8A63C7;--teal:#25A59B;--yellow:#F2B134;--ink:#2A2030;--muted:#6D6277;--bg:#FFF6F9;--line:#F0D9E3;--r:20px}
@@ -105,6 +106,26 @@ input.bad,textarea.bad{border-color:#d33}.err{color:#d33;font-size:.82rem;min-he
 .story img{width:100%;border-radius:var(--r);border:1px solid var(--line)}
 .rev{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px}.rev div{color:var(--yellow)}.rev p{margin:6px 0}
 @media(max-width:760px){.gal{grid-template-columns:1fr 1fr}.story{grid-template-columns:1fr}}
+body{background:#fff}h1,h2{letter-spacing:-.02em}
+h2{font-size:clamp(2.2rem,5vw,3.4rem)}
+.eyebrow{font-weight:700;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin-bottom:8px}
+.hero{padding:72px 0 60px;background:radial-gradient(900px 420px at 88% -10%,#fde1ec,transparent 60%),radial-gradient(700px 380px at 0 25%,#e9defa,transparent 55%)}
+.hero h1{font-size:clamp(3.4rem,10vw,6.6rem);line-height:.92}
+.stats{display:flex;gap:30px;margin-top:34px;flex-wrap:wrap}.stats div{font-size:.88rem;color:var(--muted);line-height:1.3}.stats b{display:block;font:800 1.7rem 'Baloo 2';color:var(--ink)}
+.collage{position:relative;aspect-ratio:1}
+.collage img{position:absolute;object-fit:cover;border-radius:28px;border:6px solid #fff;box-shadow:0 26px 50px rgba(42,32,48,.2)}
+.collage .a{top:0;left:0;width:76%;height:80%;transform:rotate(-3deg)}.collage .b{right:0;bottom:0;width:50%;height:48%;transform:rotate(4deg)}
+.pill{position:absolute;left:2%;bottom:6%;background:#fff;border-radius:99px;padding:10px 18px;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.14)}
+.marq{overflow:hidden;background:var(--ink);color:#fff;padding:13px 0;white-space:nowrap}.marq div{display:inline-block;animation:mq 34s linear infinite}.marq span{margin:0 22px;font-weight:500;letter-spacing:.04em}
+@keyframes mq{to{transform:translateX(-50%)}}
+section{padding:78px 0}
+.card{border:0;border-radius:24px;box-shadow:0 1px 0 var(--line),0 16px 36px rgba(42,32,48,.07)}
+.thumb{aspect-ratio:4/5}.thumb img{transition:transform .6s}.card:hover .thumb img{transform:scale(1.07)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.cc{border:2px solid var(--line);background:#fff;border-radius:99px;padding:6px 18px;font:inherit;font-weight:500;cursor:pointer}.cc.on{background:var(--ink);border-color:var(--ink);color:#fff}
+footer{background:var(--ink);color:#d9cfe3;border:0;padding:56px 0 40px}footer a{color:#fff;text-decoration:none;display:block;margin:6px 0}footer h4{font:700 .8rem 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:30px}
+@media(max-width:760px){.fgrid{grid-template-columns:1fr}.collage{max-width:420px}section{padding:56px 0}}
 </style>
 </head>
 <body>
@@ -122,17 +143,15 @@ input.bad,textarea.bad{border-color:#d33}.err{color:#d33;font-size:.82rem;min-he
     <h1><span style="color:var(--pink)">Create.</span> <span style="color:var(--teal)">Paint.</span> <span style="color:var(--purple)">Play.</span></h1>
     <p>Handmade plaster figure kits with paints and a brush in one box. Perfect for kids, families, festivals and birthday return gifts.</p>
     <a class="btn" href="#shop">Shop kits</a> <a class="btn alt" href="#bulk">Bulk return gifts</a>
+    <div class="stats"><div><b>650+</b>happy customers</div><div><b>PAN India</b>shipping</div><div><b>100%</b>handmade</div></div>
   </div>
-  <div class="stage" aria-hidden="true"><img id="heroImg" alt="">
-    <i style="background:var(--pink);top:8%;left:10%"></i><i style="background:var(--yellow);top:14%;right:8%;animation-delay:.7s"></i>
-    <i style="background:var(--teal);bottom:10%;left:14%;animation-delay:1.4s"></i><i style="background:var(--purple);bottom:16%;right:10%;animation-delay:2s"></i>
-  </div>
+  <div class="collage" aria-hidden="true"><img class="a" id="h1" alt=""><img class="b" id="h2" alt=""><div class="pill">★ 650+ happy customers</div></div>
 </div></div>
 
-<div class="wrap"><div class="trust"><span>Handmade in Pune</span><span>PAN India shipping</span><span>650+ happy customers</span><span>Pay by any UPI app</span></div></div>
+<div class="marq" aria-hidden="true"><div><span>Handmade in Pune</span><span>✦</span><span>PAN India shipping</span><span>✦</span><span>650+ happy customers</span><span>✦</span><span>Pay by any UPI app</span><span>✦</span><span>Perfect birthday return gifts</span><span>✦</span><span>Handmade in Pune</span><span>✦</span><span>PAN India shipping</span><span>✦</span><span>650+ happy customers</span><span>✦</span><span>Pay by any UPI app</span><span>✦</span><span>Perfect birthday return gifts</span><span>✦</span></div></div>
 
 <section id="shop"><div class="wrap">
-  <h2>Shop kits</h2><p class="sub">Add to cart, pay by UPI, confirm on WhatsApp. We ship in 1 to 2 days.</p>
+  <div class="eyebrow">The collection</div><h2>Shop kits</h2><p class="sub">Add to cart, pay by UPI, confirm on WhatsApp. We ship in 1 to 2 days.</p><div class="chips" id="cats"></div>
   <div class="grid" id="products"></div>
 </div></section>
 
@@ -192,10 +211,11 @@ input.bad,textarea.bad{border-color:#d33}.err{color:#d33;font-size:.82rem;min-he
 </div></div></section>
 </main>
 
-<footer><div class="wrap">
-  <div><strong>Kalaa & Co.</strong><br>Pune, India<br><span class="note">Built with passion. Made to matter. ♥</span></div>
-  <div><a id="igLink2" href="#" target="_blank" rel="noopener">Instagram</a> · <a id="waLink" href="#" target="_blank" rel="noopener">WhatsApp</a><br><span class="note">© <span id="yr"></span> Kalaa & Co.</span></div>
-</div></footer>
+<footer><div class="wrap fgrid">
+  <div><div class="logo" style="color:#fff"><b style="color:var(--pink)">kalaa</b>&nbsp;& Co.</div><p style="margin-top:10px;max-width:34ch">Handmade DIY mould kits from Pune. Create. Paint. Play.</p><p class="note" style="color:#bdb0cc;margin-top:8px">Built with passion. Made to matter. ♥</p></div>
+  <div><h4>Explore</h4><a href="#shop">Shop kits</a><a href="#paint">Try painting</a><a href="#bulk">Return gifts</a><a href="#faq">FAQ</a></div>
+  <div><h4>Connect</h4><a id="igLink2" href="#" target="_blank" rel="noopener">Instagram</a><a id="waLink" href="#" target="_blank" rel="noopener">WhatsApp</a><span class="note" style="color:#bdb0cc">Pay securely with UPI</span></div>
+</div><div class="wrap note" style="color:#9d90ab;margin-top:26px">© <span id="yr"></span> Kalaa & Co. Pune, India.</div></footer>
 
 <a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
 <div class="scrim" id="scrim"></div><div class="toast" id="toast" role="status"></div>
@@ -250,22 +270,31 @@ let cart = LS.get("kalaa-cart", {});
 const oid = "KC" + new Date().toISOString().slice(2,10).replace(/-/g,"") + Math.floor(100+Math.random()*900);
 
 /* static bits */
+function applyStatic(){
 $("#topbar").textContent = CONFIG.announcement; $("#topbar").hidden = !CONFIG.announcement;
 $("#igLink").href = $("#igLink2").href = CONFIG.instagram;
 $("#waLink").href = $("#fab").href = wa("Hi! I found you on your website.");
 $("#upiTxt").textContent = CONFIG.upiId; $("#yr").textContent = new Date().getFullYear();
 $("#tiers").textContent = CONFIG.bulkTiers.slice().reverse().map(t => `${t[0]}+ kits: ${t[1]*100}% off`).join(". ") + ".";
 
+}
+applyStatic();
+
 /* shop */
-$("#products").innerHTML = PRODUCTS.map(p => `
-  <article class="card rv${p.soon?" soon":""}">
-    <div class="thumb" style="--tint:${p.tint}">${p.badge?`<span class="badge">${esc(p.badge)}</span>`:""}${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">`:p.emoji}</div>
-    <div class="body"><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p>
-    ${p.soon ? "" : `<div class="price">${inr(p.price)}</div><details><summary>What's in the box</summary><ul>${p.inc.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></details>`}
-    ${p.soon ? `<a class="btn alt" target="_blank" rel="noopener" href="${wa("Hi! Please notify me when Drop 02 is live.")}">Notify me on WhatsApp</a>` : `<button class="btn" data-add="${p.id}">Add to cart</button>`}
+let sellable = [], catSel = "All";
+function drawShop(){
+  const cats = ["All", ...new Set(PRODUCTS.map(p => p.cat).filter(Boolean))];
+  $("#cats").innerHTML = cats.length > 2 ? cats.map(c => `<button class="cc${c===catSel?" on":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("") : "";
+  $("#products").innerHTML = PRODUCTS.filter(p => catSel==="All" || p.cat===catSel).map(p => `
+  <article class="card${p.soon?" soon":""}">
+    <div class="thumb" style="--tint:${p.tint||"#FFE9C7"}">${p.badge?`<span class="badge">${esc(p.badge)}</span>`:""}${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">`:(p.emoji||"🎨")}</div>
+    <div class="body"><h3>${esc(p.name)}</h3><p>${esc(p.desc||"")}</p>
+    ${p.soon ? "" : `<div class="price">${inr(p.price)}</div>${(p.inc||[]).length?`<details><summary>What's in the box</summary><ul>${p.inc.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></details>`:""}`}
+    ${p.soon ? `<a class="btn alt" target="_blank" rel="noopener" href="${wa("Hi! Please notify me when "+p.name+" is live.")}">Notify me on WhatsApp</a>` : `<button class="btn" data-add="${p.id}">Add to cart</button>`}
     </div></article>`).join("");
-const sellable = PRODUCTS.filter(p => !p.soon);
-$("#bk").innerHTML = sellable.map(p => `<option value="${p.id}">${esc(p.name)} (${inr(p.price)})</option>`).join("");
+  sellable = PRODUCTS.filter(p => !p.soon);
+  $("#bk").innerHTML = sellable.map(p => `<option value="${p.id}">${esc(p.name)} (${inr(p.price)})</option>`).join("");
+}
 
 /* paint demo */
 const COLORS = ["#E5457F","#F2B134","#25A59B","#8A63C7","#F26B3A","#4C9BE8","#7BC043","#ffffff"]; let cur = COLORS[0];
@@ -277,7 +306,7 @@ $("#resetArt").onclick = () => $("#art").innerHTML = petals();
 
 /* bulk */
 function bulk(){
-  const p = sellable.find(x => x.id === $("#bk").value), n = +$("#bn").value;
+  const p = sellable.find(x => x.id === $("#bk").value), n = +$("#bn").value; if (!p) return;
   const d = (CONFIG.bulkTiers.find(t => n >= t[0]) || [0,0])[1], each = p.price*(1-d), tot = each*n;
   $("#bnv").textContent = n; $("#bt").textContent = inr(tot);
   $("#bd").textContent = `${inr(each)} per kit${d?`, ${d*100}% bulk discount`:""}. Final price and shipping confirmed on WhatsApp.`;
@@ -319,6 +348,7 @@ document.addEventListener("click", e => {
     return;
   }
   const b = e.target.closest("button"); if (!b) return; const d = b.dataset;
+  if (d.cat){ catSel = d.cat; drawShop(); return; }
   if (d.add){ cart[d.add] = (cart[d.add]||0)+1; save(); render(); toast("Added to cart"); const c = $("#openCart"); c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); }
   if (d.a){ cart[d.a]++; save(); render(); }
   if (d.d){ if (--cart[d.d] <= 0) delete cart[d.d]; save(); render(); }
@@ -345,11 +375,28 @@ $("#waBtn").onclick = () => {
 /* reveal on scroll */
 const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting){ x.target.classList.add("in"); io.unobserve(x.target); } }), {threshold:.1}) : null;
 document.querySelectorAll(".rv").forEach(el => io ? io.observe(el) : el.classList.add("in"));
-$("#logoImg").src = IMG.logo; $("#heroImg").src = IMG.painted; $("#storyImg").src = IMG.story;
+$("#logoImg").src = IMG.logo; $("#h1").src = IMG.painted; $("#h2").src = IMG.ganesha_kit; $("#storyImg").src = IMG.story;
 const fav = document.createElement("link"); fav.rel = "icon"; fav.href = IMG.logo; document.head.appendChild(fav);
-$("#gal").innerHTML = [["gloves","Moulding by hand"],["batch","Fresh from the mould"],["kit_topdown","Packed with colours"],["white1","Ready to paint"]].map(g => `<img src="${IMG[g[0]]}" alt="${g[1]}" loading="lazy">`).join("");
-if (CONFIG.reviews && CONFIG.reviews.length){ $("#reviews").hidden = false; $("#revGrid").innerHTML = CONFIG.reviews.map(r => `<div class="rev"><div>★★★★★</div><p>“${esc(r.text)}”</p><b>${esc(r.name)}</b></div>`).join(""); }
-bulk(); render();
+let GALLERY = [["gloves","Moulding by hand"],["batch","Fresh from the mould"],["kit_topdown","Packed with colours"],["white1","Ready to paint"]].map(g => ({img:IMG[g[0]], cap:g[1]}));
+const drawGallery = () => $("#gal").innerHTML = GALLERY.map(g => `<img src="${esc(g.img)}" alt="${esc(g.cap||"Kalaa & Co.")}" loading="lazy">`).join("");
+function drawReviews(){ const r = CONFIG.reviews || []; $("#reviews").hidden = !r.length; $("#revGrid").innerHTML = r.map(x => `<div class="rev"><div>★★★★★</div><p>“${esc(x.text)}”</p><b>${esc(x.name)}</b></div>`).join(""); }
+drawShop(); drawGallery(); drawReviews(); bulk(); render();
+
+/* live data from the admin panel (Firebase). If not set up, the built-in products above are used. */
+(async () => {
+  const F = window.FIREBASE; if (!F || !F.apiKey || /PASTE/.test(F.apiKey)) return;
+  try {
+    const V = "https://www.gstatic.com/firebasejs/10.12.2/", DEF = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+    const [{initializeApp}, {getFirestore, collection, getDocs, getDoc, doc}] = await Promise.all([import(V+"firebase-app.js"), import(V+"firebase-firestore.js")]);
+    const db = getFirestore(initializeApp(F)), all = async n => (await getDocs(collection(db, n))).docs.map(d => ({id:d.id, ...d.data()}));
+    const [cfg, pr, ga, rv] = await Promise.all([getDoc(doc(db,"site","config")), all("products"), all("gallery"), all("reviews")]);
+    if (cfg.exists()) Object.assign(CONFIG, cfg.data());
+    const T = ["#FFE9C7","#EADCF8","#FFE0EA","#E4F5F3"], list = pr.filter(p => !p.hidden).sort((a,b) => (a.ord||0)-(b.ord||0));
+    if (list.length){ PRODUCTS.length = 0; list.forEach((p,i) => { const d = DEF[p.key] || {}; PRODUCTS.push({emoji:d.emoji||"🎨", tint:d.tint||T[i%4], ...p, price:+p.price||0, img:p.img||d.img||"", inc:p.inc||[]}); }); }
+    if (ga.length) GALLERY = ga.sort((a,b) => (a.ord||0)-(b.ord||0));
+    CONFIG.reviews = rv; applyStatic(); drawShop(); drawGallery(); drawReviews(); bulk(); render();
+  } catch(e){ console.warn("Admin data not loaded", e); }
+})();
 </script>
 </body>
 </html>
